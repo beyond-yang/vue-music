@@ -14,14 +14,14 @@
             <div class="recommend-list">
               <h1 class="list-title">热门歌单推荐</h1>
               <ul>
-                  <li class="item" v-for="(item) in songRecList" :key="item.dissid">
-                  <div class="icon">
-                      <img width="60" height="60" v-lazy="item.imgurl">
-                  </div>
-                  <div class="text">
-                      <h2 class="name">{{item.creator.name}}</h2>
-                      <p class="desc">{{item.dissname}}</p>
-                  </div>
+                  <li @click="selectItem(item)" class="item" v-for="(item) in songRecList" :key="item.dissid">
+                    <div class="icon">
+                        <img width="60" height="60" v-lazy="item.imgurl">
+                    </div>
+                    <div class="text">
+                        <h2 class="name">{{item.creator.name}}</h2>
+                        <p class="desc">{{item.dissname}}</p>
+                    </div>
                   </li>
               </ul>
             </div>
@@ -41,6 +41,7 @@ import Slider from 'base/slider/slider.vue'
 import Scroll from 'base/scroll/scroll.vue'
 import Loading from 'base/loading/loading.vue'
 import {playlistMixin} from 'common/js/mixin.js'
+import {mapMutations} from 'vuex'
 
 export default {
     mixins: [playlistMixin],
@@ -85,7 +86,17 @@ export default {
           const bottom = playlist.length>0?'60px':''
           this.$refs.recommend.style.bottom = bottom
           this.$refs.scroll.refresh()
-        }
+        },
+        selectItem(item) {
+          this.setDisc(item)
+          this.$router.push({
+            path: `/recommend/${item.dissid}`
+          })
+        },
+        ...mapMutations({
+          setDisc: 'SET_DISC'
+        })
+      
 
     },
     components: {

@@ -23,6 +23,10 @@ export default {
         listenScroll: {
             type: Boolean,
             default: false
+        },
+        pullup: {
+            type: Boolean,
+            default: false
         }
     },
     mounted() {
@@ -47,6 +51,14 @@ export default {
                    That.$emit('scroll', pos)
                })
             }
+            // 如果pullup为true的话添加上拉加载功能，监听scrollEnd事件
+            if(this.pullup) {
+                this.scroll.on('scrollEnd', ()=>{
+                    if(this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+                        this.$emit('scrollToEnd')
+                    }
+                })
+            }
         },
         enable() {
             this.scroll && this.scroll.enable()
@@ -63,6 +75,8 @@ export default {
         scrollToElement() {
             this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
         }
+        
+
     },
     watch: {
         data() {

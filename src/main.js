@@ -11,6 +11,12 @@ Vue.use(VueLazyload, {
   loading: require('common/images/default.png')
 })
 
+// import Router from 'vue-router'
+// const routerPush = Router.prototype.push
+// Router.prototype.push = function push(location) {
+//   return routerPush.call(this, location).catch(error=> error)
+// }
+
 import 'common/stylus/index.styl'
 Vue.config.productionTip = false
 
