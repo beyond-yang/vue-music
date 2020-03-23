@@ -1,12 +1,13 @@
 <template>
     <div class="search-box">
         <i class="icon-search"></i>
-        <input class="box" v-model="query" :placeholder="placeholder"/>
+        <input ref="input" class="box" v-model="query" :placeholder="placeholder"/>
         <i class="icon-dismiss" v-show='query' @click='dissQuery'></i>
     </div>
 </template>
 
 <script>
+import {debounce} from 'common/js/util.js'
 export default {
     data() {
         return {
@@ -20,9 +21,9 @@ export default {
         }
     },
     created() {
-        this.$watch('query', (newQuery)=>{
+        this.$watch('query', debounce((newQuery)=>{
             this.$emit('query', newQuery)
-        })
+        }, 200))
     },
     methods: {
         dissQuery() {
@@ -30,6 +31,9 @@ export default {
         },
         setQuery(query) {
             this.query = query
+        },
+        blur() {
+            this.$refs.input.blur()
         }
     }
 }
@@ -37,7 +41,9 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-
+  
+  *
+    touch-action: pan-x
   .search-box
     display: flex
     align-items: center

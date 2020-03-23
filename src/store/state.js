@@ -1,4 +1,5 @@
 import {playMode} from 'common/js/config.js'
+import {storageReload} from 'common/js/cache.js'
 const state = {
     singer: {},//当前歌手信息
     playing: false,//播放器播放状态
@@ -8,7 +9,8 @@ const state = {
     mode: playMode.sequence,
     currentIndex: -1,//当前歌曲播放的索引
     disc: {},
-    toplist: {}
+    toplist: {},
+    searchHistory: storageReload()
 }
 
 export default state

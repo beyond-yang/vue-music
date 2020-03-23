@@ -15,6 +15,7 @@
     "create-keyframe-animation": "^0.1.0",
     "express": "^4.17.1",
     "fastclick": "^1.0.6",
+    "good-storage": "^1.1.1",
     "js-base64": "^2.5.2",
     "jsonp": "^0.2.1",
     "lazy-load": "^0.0.2",

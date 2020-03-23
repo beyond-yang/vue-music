@@ -27,6 +27,10 @@ export default {
         pullup: {
             type: Boolean,
             default: false
+        },
+        beforeScroll: {
+            type: Boolean,
+            default: false
         }
     },
     mounted() {
@@ -57,6 +61,12 @@ export default {
                     if(this.scroll.y <= (this.scroll.maxScrollY + 50)) {
                         this.$emit('scrollToEnd')
                     }
+                })
+            }
+            // scroll组件滚动之前派发出一个事件
+            if(this.beforeScroll) {
+                this.scroll.on('beforeScrollStart', ()=>{
+                    this.$emit('beforeScroll')
                 })
             }
         },

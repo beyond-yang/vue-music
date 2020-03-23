@@ -1,6 +1,6 @@
 <template>
   <div class="singer" ref="singer">
-      <list-view :data="singerList" @select="select" ref="singerF"></list-view>
+      <list-view :data="singerList" ref="singerF"></list-view>
       <router-view></router-view>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
             getSingerList().then((res)=>{
                 if(res.code === ERR_OK) {
                     this.singerList = this._normalize(res.data.list) 
-                    console.log(this.singerList)   
+                    // console.log(this.singerList)   
 
                 }
             })
