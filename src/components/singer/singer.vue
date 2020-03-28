@@ -1,6 +1,6 @@
 <template>
   <div class="singer" ref="singer">
-      <list-view :data="singerList" ref="singerF"></list-view>
+      <list-view @select="select" :data="singerList" ref="singerF"></list-view>
       <router-view></router-view>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
             ret.sort((a, b)=>{
                 return a.title.charCodeAt(0)-b.title.charCodeAt(0)
             })
-            console.log(hot.concat(ret))
+            // console.log(hot.concat(ret))
             return hot.concat(ret)
         },
         // 点击某个歌手列表，通过传入歌手id，进行编程式路由，跳转到歌手详情页

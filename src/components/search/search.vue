@@ -4,7 +4,7 @@
             <search-box ref="searchBox" @query="getQuery"></search-box>
         </div>
         <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
-            <scroll ref="shortcut" class="shortcut" :data="shortcut">
+            <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
                 <div>
                     <div class="hot-key">
                         <h1 class="title">热门搜索</h1>
@@ -43,13 +43,12 @@ import {mapActions, mapGetters} from 'vuex'
 import SearchList from 'base/search-list/search-list.vue'
 import Confirm from 'base/confirm/confirm.vue'
 import Scroll from 'base/scroll/scroll.vue'
-import {playlistMixin} from 'common/js/mixin.js'
+import {playlistMixin, searchMixin} from 'common/js/mixin.js'
 export default {
-    mixins: [playlistMixin],
+    mixins: [playlistMixin, searchMixin],
     data() {
         return {
             hotkey: [],
-            query: '',
             confirmTitle: '确认清除搜索历史吗？',
             confirmBtnText: '清除'
         }
@@ -57,10 +56,7 @@ export default {
     computed: {
         shortcut() {
             return this.hotkey.concat(this.searchHistory)
-        },
-        ...mapGetters([
-            'searchHistory'
-        ])
+        }
     },
     watch: {
         query(newQuery) {
@@ -83,19 +79,7 @@ export default {
                 }
             })
         },
-        // 点击热门搜索关键字后，
-        addQuery(item) {
-            this.$refs.searchBox.setQuery(item)
-        },
-        getQuery(newQuery) {
-            this.query = newQuery
-        },
-        inputBlur() {
-            this.$refs.searchBox.blur()
-        },
-        saveSearch(item) {
-            this.saveSearch(item)
-        },
+        
         // 点击后显示清除或取消模态框
         showConfirm() {
             this.$refs.confirm.show()
@@ -106,11 +90,8 @@ export default {
             this.$refs.shortcut.refresh()
             this.$refs.searchResult.style.bottom = bottom
             this.$refs.suggest.refresh()
-
         },
         ...mapActions([
-            'saveSearch',//保存搜索历史
-            'deleteHistoryOne',//删除搜索历史的某条数据
             'deleteHistoryAll'//清空全部搜索历史数据
         ])
     },

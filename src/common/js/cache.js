@@ -2,6 +2,8 @@ import storage from 'good-storage'
 
 const CACHE_KEY = '__search__'
 const ARR_MAX = 15
+const PLAY_KEY = '__play__'
+const PLAY_MAX_LENGTH = 100
 
 function findIndex(list, item) {
     return list.findIndex((listItem)=>{
@@ -52,4 +54,19 @@ export function storageDeleteOne(deleteItem) {
 export function storageDeleteAll() {
     storage.remove(CACHE_KEY)
     return []
+}
+
+// 把最近播放的歌曲缓存到本地，页面中最近播放列表中的数据来源于本地，以便页面刷新后还有数据
+export function savePlay(song) {
+    let recentPlaySongs = storage.get(PLAY_KEY, [])
+    insertQuery(recentPlaySongs, song, (item)=>{
+        return item.id === song.id
+    }, PLAY_MAX_LENGTH)
+    storage.set(PLAY_KEY, recentPlaySongs)
+    return recentPlaySongs
+}
+
+// 获取本地存储中的最近播放歌曲数据
+export function loadPlay() {
+    return storage.get(PLAY_KEY, [])
 }
