@@ -7,6 +7,7 @@ import state from './state.js'
 import mutations from './mutations.js'
 import createLogger from 'vuex/dist/logger.js'
 
+
 Vue.use(Vuex)
 
 // const debug = process.env.NODE_ENV = 'production'

@@ -11,17 +11,17 @@
                 </div>
                 <scroll :refreshDelay="refreshDelay" ref="listContent" class="list-content" :data="sequenceList">
                     <transition-group name="list" tag="ul">
-                        <li :key="item.id" @click="selectItem(item, index)" 
+                        <li :key="item.id"  
                             class="item" 
                             v-for="(item, index) in sequenceList" 
                             ref="listItem">
                             <i class="current" :class="iconPlay(item)"></i>
-                            <span class="text">{{item.name}}</span>
-                            <span class="like">
-                                <i class="icon-not-favorite"></i>
+                            <span @click="selectItem(item, index)" class="text">{{item.name}}</span>
+                            <span class="like" @click.stop="toggleFavorite(item)">
+                                <i :class="getFavoriteIcon(item)" class="icon"></i>
                             </span>
-                            <span class="delete" @click.stop="deleteOne(item)">
-                                <i class="icon-delete"></i>
+                            <span class="delete">
+                                <i @click.stop="deleteOne(item)" class="icon-delete"></i>
                             </span>
                         </li>
                     </transition-group>
@@ -44,7 +44,7 @@
 
 <script>
 import Scroll from 'base/scroll/scroll.vue'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import {playMode} from 'common/js/config.js'
 import Confirm from 'base/confirm/confirm.vue'
 import {playerMixin} from 'common/js/mixin.js'

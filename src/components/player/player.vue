@@ -36,7 +36,7 @@
                       <p ref="lyricLine" 
                          class="text" 
                          v-for="(line, index) in currentLyric.lines" 
-                         :key="line.time"
+                         :key="index"
                          :class="{'current': currentLineNum==index}">
                         {{line.txt}}
                       </p>
@@ -70,7 +70,7 @@
                         <i @click="next" class="icon-next"></i>
                     </div>
                     <div class="icon i-right">
-                        <i class="icon icon-not-favorite"></i>
+                        <i @click="toggleFavorite(currentSong)" class="icon" :class="getFavoriteIcon(currentSong)"></i>
                     </div>
                 </div>
             </div>

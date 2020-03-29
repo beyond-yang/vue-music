@@ -7,6 +7,7 @@ import Singer from './../components/singer/singer.vue'
 import SingerDetail from 'components/singer-detail/singer-detail.vue'
 import Disc from 'components/disc/disc.vue'
 import rankDetail from 'components/rank-detail/rank-detail.vue'
+import UserCenter from 'components/user-center/user-center.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [
         component: SingerDetail
       }
     ]
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: UserCenter
   }
 
 ]
