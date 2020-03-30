@@ -1,5 +1,7 @@
 import * as types from './mutation-types.js'
-import { playlist } from './getters.js'
+import {
+    playlist
+} from './getters.js'
 
 const mutations = {
     [types.SET_SINGER](state, singer) {

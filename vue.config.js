@@ -11,7 +11,7 @@ module.exports = {
             // 访问QQ音乐官网的接口
 
             // 请求QQ音乐端接口，获取用于渲染轮播图的数据
-            app.get('/api/getTopBanner', (req, res)=>{
+            app.get('/api/getTopBanner', (req, res) => {
                 const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
                 const jumpPrefix = 'https://y.qq.com/n/yqq/album/'
                 axios.get(url, {
@@ -20,13 +20,13 @@ module.exports = {
                         host: 'u.y.qq.com'
                     },
                     params: req.query
-                }).then((response)=>{
+                }).then((response) => {
                     response = response.data
-                    if(response.code === 0) {
+                    if (response.code === 0) {
                         const slider = []
                         const content = response.focus.data && response.focus.data.content
-                        if(content) {
-                            for(let i=0; i<content.length; i++) {
+                        if (content) {
+                            for (let i = 0; i < content.length; i++) {
                                 const item = content[i]
                                 const sliderItem = {}
                                 sliderItem.id = item.id
@@ -38,7 +38,9 @@ module.exports = {
                         res.json({
                             code: 0,
                             msg: 'suc',
-                            data: { slider }
+                            data: {
+                                slider
+                            }
                         })
                     } else {
                         res.json({
@@ -47,27 +49,27 @@ module.exports = {
                             data: ''
                         })
                     }
-                }).catch((e)=>{
+                }).catch((e) => {
                     console.log(e)
                 })
             })
 
             // 请求QQ音乐接口，获取用于渲染热门歌单推荐的数据
-            app.get('/api/getSongRecList', (req, res)=>{
+            app.get('/api/getSongRecList', (req, res) => {
                 const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
                 axios.get(url, {
                     headers: {
-                      referer: 'https://c.y.qq.com/',
-                      host: 'c.y.qq.com'
+                        referer: 'https://c.y.qq.com/',
+                        host: 'c.y.qq.com'
                     },
                     params: req.query
-                }).then((response)=>{
+                }).then((response) => {
                     res.json(response.data)
-                }).catch((e)=>{
+                }).catch((e) => {
                     console.log(e)
                 })
             })
-            
+
             // 请求QQ音乐接口，获取歌曲的url地址
             app.post('/api/getPurlUrl', bodyParser.json(), function (req, res) {
                 const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
@@ -77,9 +79,9 @@ module.exports = {
                         origin: 'https://y.qq.com',
                         'Content-type': 'application/x-www-form-urlencoded'
                     }
-                }).then((response)=>{
+                }).then((response) => {
                     res.json(response.data)
-                }).catch((e)=>{
+                }).catch((e) => {
                     console.log(e)
                 })
             })
@@ -87,24 +89,23 @@ module.exports = {
             // 请求QQ音乐接口，获取歌词
             app.get('/api/lyric', function (req, res) {
                 const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
-                axios.get(url,
-                    {
-                        headers: {
-                            referer: 'https://c.y.qq.com/',
-                            host: 'c.y.qq.com'
-                          },
-                        params: req.query
-                }).then((response)=>{
+                axios.get(url, {
+                    headers: {
+                        referer: 'https://c.y.qq.com/',
+                        host: 'c.y.qq.com'
+                    },
+                    params: req.query
+                }).then((response) => {
                     let ret = response.data
-                    if(typeof ret === 'string') {
+                    if (typeof ret === 'string') {
                         const reg = /^\w+\(({.+})\)$/
                         const matches = ret.match(reg)
-                        if(matches) {
+                        if (matches) {
                             ret = JSON.parse(matches[1])
                         }
                     }
                     res.json(ret)
-                }).catch((e)=>{
+                }).catch((e) => {
                     console.log(e)
                 })
             })
@@ -118,51 +119,36 @@ module.exports = {
                         host: 'c.y.qq.com'
                     },
                     params: req.query
-                }).then((response)=>{
+                }).then((response) => {
                     let ret = response.data
                     if (typeof ret === 'string') {
                         const reg = /^\w+\(({.+})\)$/
                         const matches = ret.match(reg)
                         if (matches) {
-                        ret = JSON.parse(matches[1])
+                            ret = JSON.parse(matches[1])
                         }
                     }
                     res.json(ret)
-                }).catch((e)=>{
+                }).catch((e) => {
                     console.log(e)
                 })
             })
 
             // 请求服务器接口，获取搜索列表
-            // app.get('api/search', function (req, res) {
-            //     const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
-            //     axios.get(url, {
-            //         headers: {
-            //             referer: 'https://c.y.qq.com/',
-            //             host: 'c.y.qq.com'
-            //         },
-            //         params: req.query
-            //     }).then((response)=>{
-            //         res.json(response.data)
-            //     }).catch((e)=>{
-            //         console.log(e)
-            //     })
-            // })
-
             app.get('/api/search', function (req, res) {
                 const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
                 axios.get(url, {
-                  headers: {
-                    referer: 'https://c.y.qq.com/',
-                    host: 'c.y.qq.com'
-                  },
-                  params: req.query
+                    headers: {
+                        referer: 'https://c.y.qq.com/',
+                        host: 'c.y.qq.com'
+                    },
+                    params: req.query
                 }).then((response) => {
-                  res.json(response.data)
+                    res.json(response.data)
                 }).catch((e) => {
-                  console.log(e)
+                    console.log(e)
                 })
-              })
+            })
         }
     },
     // chainWebpack (config) {
@@ -173,12 +159,12 @@ module.exports = {
     // },
     configureWebpack: {
         resolve: {
-          alias: {
-            'api': '@/api',
-            'components': '@/components',
-            'common': '@/common',
-            'base': '@/base'
-          }
+            alias: {
+                'api': '@/api',
+                'components': '@/components',
+                'common': '@/common',
+                'base': '@/base'
+            }
         }
     },
     publicPath: ''

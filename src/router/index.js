@@ -11,8 +11,7 @@ import UserCenter from 'components/user-center/user-center.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     redirect: '/recommend'
   },
@@ -20,45 +19,37 @@ const routes = [
     path: '/rank',
     name: 'Rank',
     component: Rank,
-    children: [
-      {
-        path: ':id',
-        component: rankDetail
-      }
-    ]
+    children: [{
+      path: ':id',
+      component: rankDetail
+    }]
   },
   {
     path: '/recommend',
     name: 'Recommend',
     component: Recommend,
-    children: [
-      {
-        path: ':id',
-        component: Disc
-      }
-    ]
+    children: [{
+      path: ':id',
+      component: Disc
+    }]
   },
   {
     path: '/search',
     name: 'Search',
     component: Search,
-    children: [
-      {
-        path: ':id',
-        component: SingerDetail
-      }
-    ]
+    children: [{
+      path: ':id',
+      component: SingerDetail
+    }]
   },
   {
     path: '/singer',
     name: 'Singer',
     component: Singer,
-    children: [
-      {
-        path: ':id',
-        component: SingerDetail
-      }
-    ]
+    children: [{
+      path: ':id',
+      component: SingerDetail
+    }]
   },
   {
     path: '/user',

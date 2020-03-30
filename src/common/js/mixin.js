@@ -1,7 +1,14 @@
-
-import {playMode} from 'common/js/config.js'
-import {shuffle} from 'common/js/util.js'
-import {mapGetters, mapMutations, mapActions} from 'vuex'
+import {
+    playMode
+} from 'common/js/config.js'
+import {
+    shuffle
+} from 'common/js/util.js'
+import {
+    mapGetters,
+    mapMutations,
+    mapActions
+} from 'vuex'
 export const playlistMixin = {
     computed: {
         ...mapGetters([
@@ -31,7 +38,7 @@ export const playerMixin = {
     computed: {
         // 播放歌曲模式
         iconMode() {
-            return this.mode===playMode.sequence?'icon-sequence':this.mode===playMode.loop?'icon-loop':'icon-random'
+            return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random'
         },
         ...mapGetters([
             'mode',
@@ -45,43 +52,43 @@ export const playerMixin = {
     methods: {
         // 点击播放模式按钮，切换歌曲的播放模式
         modeChange() {
-          const mode = (this.mode+1) % 3
-          this.setPlayMode(mode)
-          let list = null
-          if(mode === playMode.random) {
-            list = shuffle(this.sequenceList)
-          } else {
-            list = this.sequenceList
-          }
-          this.resetCurrentIndex(list)
-          this.setPlayList(list) 
+            const mode = (this.mode + 1) % 3
+            this.setPlayMode(mode)
+            let list = null
+            if (mode === playMode.random) {
+                list = shuffle(this.sequenceList)
+            } else {
+                list = this.sequenceList
+            }
+            this.resetCurrentIndex(list)
+            this.setPlayList(list)
         },
         // currentSong是通过playlist和currentIndex计算出来的，当播放模式改变时，
         // 要想使currentSong不改变，那么就要计算这首歌在当前播放列表的索引值
         resetCurrentIndex(list) {
-          const index = list.findIndex((item)=>{ 
-            return item.id === this.currentSong.id
-          })
-          console.log(this.currentSong)
-          this.setCurrentIndex(index)
-          
+            const index = list.findIndex((item) => {
+                return item.id === this.currentSong.id
+            })
+            console.log(this.currentSong)
+            this.setCurrentIndex(index)
+
         },
         toggleFavorite(currentSong) {
-            if(this.isFavorite(currentSong)) {
+            if (this.isFavorite(currentSong)) {
                 this.cancelFavorite(currentSong)
             } else {
                 this.saveFavorite(currentSong)
             }
         },
         getFavoriteIcon(currentSong) {
-            if(this.isFavorite(currentSong)) {
+            if (this.isFavorite(currentSong)) {
                 return 'icon-favorite'
             } else {
                 return 'icon-not-favorite'
             }
         },
         isFavorite(currentSong) {
-            const index = this.favoriteList.findIndex((item)=>{
+            const index = this.favoriteList.findIndex((item) => {
                 return currentSong.id === item.id
             })
             return index > -1
@@ -127,8 +134,8 @@ export const searchMixin = {
             this.$refs.searchBox.setQuery(item)
         },
         ...mapActions([
-            'saveSearch',//保存搜索历史
-            'deleteHistoryOne'//删除搜索历史的某条数据
+            'saveSearch', //保存搜索历史
+            'deleteHistoryOne' //删除搜索历史的某条数据
         ])
     }
 }
