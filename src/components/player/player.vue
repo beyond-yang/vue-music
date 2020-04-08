@@ -100,7 +100,7 @@
         <play-list ref="playList"></play-list>
         <audio ref="audio" 
                :src="currentSong.url" 
-               @canplay="ready" 
+               @play="ready" 
                @error="error"
                @timeupdate="timeUpdate"
                @ended="end">
@@ -167,8 +167,12 @@ export default {
             }
             if(this.currentLyric) {
               this.currentLyric.stop()
+              this.currentTime = 0
+              this.playingLyric = ''
+              this.currentLIneNum = 0 
             }
-            setTimeout(()=>{
+            clearTimeout(this.timer)
+            this.timer = setTimeout(()=>{
                 this.$refs.audio.play()
                 this.getLyric()
                 this.durationTime = this.currentSong.duration    
@@ -256,6 +260,7 @@ export default {
           }
           if(this.playlist.length === 1) {
             this.loop()
+            return
           } else {
             let index = this.currentIndex+1
             if(index===this.playlist.length) {
@@ -274,6 +279,7 @@ export default {
           }
           if(this.playlist.length === 1) {
             this.loop()
+            return
           } else {
             let index = this.currentIndex-1
             if(index<0) {
@@ -334,6 +340,9 @@ export default {
         // 获取当前播放歌曲的歌词
         getLyric() {
           this.currentSong.getLyric().then((lyric)=>{
+            if(this.currentSong.lyric !== lyric) {
+              return
+            }
             this.currentLyric = new Lyric(lyric, this.handleLyric)
             if(this.playing) {
               this.currentLyric.play()
