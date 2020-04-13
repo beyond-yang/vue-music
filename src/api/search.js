@@ -4,7 +4,7 @@ import {
   options
 } from 'api/config.js'
 import axios from 'axios'
-const debug = process.env.NODE_ENV !== 'production'
+// const debug = process.env.NODE_ENV !== 'production'
 // 封装获取热门搜索关键字的jsonp请求
 export function getHotKey() {
   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
@@ -18,7 +18,7 @@ export function getHotKey() {
 }
 
 export function search(query, page, zhida, perpage) {
-  const url = debug ? '/api/search' : 'http://ustbhuangyi.com/music/api/search'
+  const url = '/api/search'
 
   const data = Object.assign({}, commonParams, {
     w: query,

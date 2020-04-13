@@ -4,7 +4,7 @@ import {
     options
 } from './config'
 import axios from 'axios'
-const debug = process.env.NODE_ENV !== 'production'
+// const debug = process.env.NODE_ENV !== 'production'
 export function getRecommend() {
     const url = '/api/getTopBanner'
     const data = Object.assign({}, commonParams, {
@@ -108,7 +108,7 @@ export function getSongRecList() {
 
 // 获取QQ音乐的歌单列表
 export function getSongList(disstid) {
-    const url = debug ? '/api/getSongList' : 'http://ustbhuangyi.com/music/api/getCdInfo'
+    const url = '/api/getSongList'
     const data = Object.assign({}, commonParams, {
         disstid,
         type: 1,

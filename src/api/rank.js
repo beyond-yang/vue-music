@@ -3,7 +3,7 @@ import {
   commonParams,
   options
 } from './config.js'
-import axios from 'axios'
+// import axios from 'axios'
 
 // 获取排行榜页面的数据
 export function getTopList() {

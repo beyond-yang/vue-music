@@ -4,20 +4,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import fastclick from 'fastclick'
-fastclick.attach(document.body)
-
 import VueLazyload from 'vue-lazyload'
+import 'common/stylus/index.styl'
+
+
+import VConsole from 'vconsole'
+// init vConsole
+/* eslint-disable no-unused-vars */
+var vConsole = new VConsole();
+console.log('test')
+
+fastclick.attach(document.body)
 Vue.use(VueLazyload, {
   loading: require('common/images/default.png')
 })
-
-// import Router from 'vue-router'
-// const routerPush = Router.prototype.push
-// Router.prototype.push = function push(location) {
-//   return routerPush.call(this, location).catch(error=> error)
-// }
-
-import 'common/stylus/index.styl'
 Vue.config.productionTip = false
 
 new Vue({
